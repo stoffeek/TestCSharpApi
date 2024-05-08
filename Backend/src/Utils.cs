@@ -1,6 +1,34 @@
+using Newtonsoft.Json;
+
 namespace WebApp;
 public static class Utils
 {
+    public static HashSet<string> BadWords { get;private set; }
+
+    static Utils()
+    {
+        
+        LoadBadWords(Path.Combine("json","badwords.json"));
+
+    }
+
+    public static void LoadBadWords(string filepath)
+    {
+        var BwReadingList = File.ReadAllText(filepath);
+        var data = JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(BwReadingList);
+        BadWords = new HashSet<string>(data["badwords"], StringComparer.OrdinalIgnoreCase);
+    }
+
+    public static string RemoveBadWord(string input , string replacement)
+    {
+        foreach(var word in BadWords)
+        {
+            var regex = new Regex("\\b" + Regex.Escape(word) + "\\b", RegexOptions.IgnoreCase);
+            input = regex.Replace(input, replacement);
+        }
+        return input;
+    }
+
     public static int SumInts(int a, int b)
     {
         return a + b;
@@ -30,5 +58,7 @@ public static class Utils
         }
         return successFullyWrittenUsers;
     }
+
+    
 
 }
