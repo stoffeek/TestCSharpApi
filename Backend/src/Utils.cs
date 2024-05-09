@@ -5,13 +5,6 @@ public static class Utils
 {
     public static HashSet<string> BadWords { get;private set; }
 
-    static Utils()
-    {
-        
-        LoadBadWords(Path.Combine("json","badwords.json"));
-
-    }
-
     public static void LoadBadWords(string filepath)
     {
         var BwReadingList = File.ReadAllText(filepath);

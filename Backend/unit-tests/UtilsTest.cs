@@ -1,7 +1,7 @@
 
 
 namespace WebApp;
-    public class UtilsTest(Xlog output)
+    public class UtilsTest(Xlog Console)
     {
         // The following lines are needed to get 
         // output to the Console to work in xUnit tests!
@@ -16,14 +16,13 @@ namespace WebApp;
         public void FilteredBadwords()
         {
             Utils.LoadBadWords(Path.Combine("json", "badwords.json"));
-          string text = "This is sum text with anus and maybe asshole";
-         string expectedCensoredText = "This is sum text with *** and maybe ***";  // Säkerställ att detta är korrekt
-
-
+           
+            string text = "This is sum text with anus and maybe asshole";
+            string expectedCensoredText = "This is sum text with *** and maybe ***";  // Säkerställ att detta är korrekt
             string actualCensoredText = Utils.RemoveBadWord(text,"***");
 
-            output.WriteLine("Censored text - " + actualCensoredText);
-            output.WriteLine("Expected outcome - " + expectedCensoredText);
+            Console.WriteLine("Censored text - " + actualCensoredText);
+            Console.WriteLine("Expected outcome - " + expectedCensoredText);
 
             Assert.Equal(expectedCensoredText, actualCensoredText);
 
@@ -54,12 +53,12 @@ namespace WebApp;
         var result = Utils.CreateMockUsers();
         // Assert that the CreateMockUsers only return
         // newly created users in the db
-        output.WriteLine($"The test expected that {mockUsersNotInDb.Length} users should be added.");
-        output.WriteLine($"And {result.Length} users were added.");
-        output.WriteLine("The test also asserts that the users added " +
+        Console.WriteLine($"The test expected that {mockUsersNotInDb.Length} users should be added.");
+        Console.WriteLine($"And {result.Length} users were added.");
+        Console.WriteLine("The test also asserts that the users added " +
             "are equivalent (the same) to the expected users!");
         Assert.Equivalent(mockUsersNotInDb, result);
-        output.WriteLine("The test passed!");
+        Console.WriteLine("The test passed!");
     }
 
 }
