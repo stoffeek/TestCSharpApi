@@ -58,7 +58,7 @@ namespace WebApp;
         Console.WriteLine("The test also asserts that the users added " +
             "are equivalent (the same) to the expected users!");
         Assert.Equivalent(mockUsersNotInDb, result);
-        Console.WriteLine("The test passed!");
+        Console.WriteLine("The test passed good one!");
     }
 
 }   
