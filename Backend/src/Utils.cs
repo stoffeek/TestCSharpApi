@@ -1,8 +1,34 @@
+using System.Security.Cryptography.X509Certificates;
 using Newtonsoft.Json;
 
 namespace WebApp;
 public static class Utils
 {
+    public static bool IsPasswordStrongEnough(string password)
+    {
+        // Kontrollera att lösenordet är minst 8 tecken långt
+        if (password.Length < 8)
+            return false;
+
+        // Kontrollera att lösenordet innehåller liten bokstav
+        if (!Regex.IsMatch(password, @"[a-z]"))
+            return false;
+
+        // Kontrollera att lösenordet innehåller stor bokstav
+        if (!Regex.IsMatch(password, @"[A-Z]"))
+            return false;
+
+        // Kontrollera att lösenordet innehåller en siffra
+        if (!Regex.IsMatch(password, @"\d"))
+            return false;
+
+        // Kontrollera att lösenordet innehåller ett specialtecken
+        if (!Regex.IsMatch(password, @"[^a-zA-Z\d]"))
+            return false;
+
+        return true;
+
+    }
     public static HashSet<string> BadWords { get;private set; }
 
     public static void LoadBadWords(string filepath)
@@ -16,8 +42,8 @@ public static class Utils
     {
         foreach(var word in BadWords)
         {
-            var regex = new Regex("\\b" + Regex.Escape(word) + "\\b", RegexOptions.IgnoreCase);
-            input = regex.Replace(input, replacement);
+            var badwordz = new Regex("\\b" + Regex.Escape(word) + "\\b", RegexOptions.IgnoreCase);
+            input = badwordz.Replace(input, replacement);
         }
         return input;
     }
@@ -46,12 +72,12 @@ public static class Utils
             {
                 // The specification says return the user list without password
                 user.Delete("password");
+                user["id"] = result["id"];
                 successFullyWrittenUsers.Push(user);
             }
         }
         return successFullyWrittenUsers;
     }
 
-    
 
 }
