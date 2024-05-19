@@ -14,6 +14,19 @@
       "description": "Allt du behöver för att hålla hemmet rent."
     }
   ],
-  "products": [],
-  "comments": []
+  "products": [
+    {
+      "name":"Gurka",
+      "description":"Krispig super guurk",
+      "price":25,
+      "categoryid":"Grönsaker"
+    }
+    ],
+  "comments": [
+    {
+      "comment":"bra gurka",
+      "productid":"Gurka",
+      "userid":3
+    }
+  ]
 }
