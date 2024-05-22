@@ -6,7 +6,8 @@ Globals = Obj(new
     aclOn = false,
     isSpa = true,
     port = 3001,
-    serverName = "Mine Minimal API Server",
+
+    serverName = "Stoffes Stuuffz   ",
     frontendPath = FilePath("..", "Frontend"),
     sessionLifeTimeHours = 2
 });

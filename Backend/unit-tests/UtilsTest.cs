@@ -10,6 +10,19 @@ namespace WebApp;
         // dotnet test --logger "console;verbosity=detailed"
         // for the logging to work
 
+        [Theory]
+        [InlineData("")]            //Too short/empty
+        [InlineData("Va123!")]     // Too short
+        [InlineData("Valid1234")]  // Without special character
+        [InlineData("valid123!")]  // Without upper case
+        [InlineData("VALID123!")]  // Without lower case    
+        [InlineData("Validaaaa!")] // Without digit       
+        public void PassIsNotStrongEnough(string toTest)
+        {
+            // Testar ett ogiltigt lösenord (för kort)
+            bool result = Utils.IsPasswordStrongEnough(toTest);
+            Assert.False(result, "Lösenordet är inte tillräckligt starkt");
+        }
     
 
         [Fact]
@@ -21,6 +34,7 @@ namespace WebApp;
             string expectedCensoredText = "This is sum text with *** and maybe ***";  // Säkerställ att detta är korrekt
             string actualCensoredText = Utils.RemoveBadWord(text,"***");
 
+            Console.WriteLine("Orginal text -" + text);
             Console.WriteLine("Censored text - " + actualCensoredText);
             Console.WriteLine("Expected outcome - " + expectedCensoredText);
 
@@ -60,5 +74,6 @@ namespace WebApp;
         Assert.Equivalent(mockUsersNotInDb, result);
         Console.WriteLine("The test passedds!");
     }
+
 
 }   
