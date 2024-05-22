@@ -7,7 +7,7 @@ Feature: As user I want to be able to see the correct products listed when I hav
 
     Examples:
       | category    | product           |
-      | Prisvänligt | Basic tomatsås    |
+      | Electronics | Smartphone        |
       | Prisvänligt | Mjöliga makaroner |
       | Vardag      | Potatis           |
       | Vardag      | Gul lök           |
