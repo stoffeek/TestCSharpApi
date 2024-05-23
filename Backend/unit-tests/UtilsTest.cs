@@ -16,7 +16,7 @@ namespace WebApp;
         [InlineData("Valid1234")]  // Without special character
         [InlineData("valid123!")]  // Without upper case
         [InlineData("VALID123!")]  // Without lower case    
-        [InlineData("Validaaaa!")] // Without digit       
+        [InlineData("Validaaaaa!")] // Without digit       
         public void PassIsNotStrongEnough(string toTest)
         {
             // Testar ett ogiltigt lösenord (för kort)
