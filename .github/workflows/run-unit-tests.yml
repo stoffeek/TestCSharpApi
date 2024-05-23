@@ -19,7 +19,6 @@ jobs:
     env:
       Solution_Name: Backend.sln
       Test_Project_Path: Backend
-      DATABASE_URL: sqlite://./Backend/_db.sqlite3
 
     steps:
     - name: Checkout
@@ -35,7 +34,7 @@ jobs:
 
     # Copy database from DbTemplate to Backend
     - name: Copy database to project
-      run: copy DbTemplate\\_db.sqlite3 Backend\\_db.sqlite3
+      run: copy DbTemplate\\_db.sqlite3 Backend
 
     # Execute all unit tests in the solution
     - name: Execute unit tests
@@ -44,30 +43,17 @@ jobs:
     # Start backend non-blocking
     - name: Start the backend
       shell: bash
-      run: |
-        cd Backend
-        nohup dotnet run &
-
-    # Install npm dependencies for endpoint tests
-    - name: Install npm dependencies for endpoint tests
-      run: |
-        cd endpoint-tests
-        npm install
+      run: cd Backend && nohup dotnet run &
 
     # Run the endpoint tests
+    # (note: The reason we don't have to install Newman
+    #  is that it is already installed in the 
+    #  GitHub Actions Windows Server runner image)
     - name: Run the endpoint tests
-      run: |
-        cd endpoint-tests
-        npm test
-
-    # Install npm dependencies for UI tests
-    - name: Install npm dependencies for UI tests
-      run: |
-        cd ui-tests
-        npm install
+      shell: bash
+      run: cd endpoint-tests && npm test
 
     # Run the UI tests
     - name: Run the UI tests
-      run: |
-        cd ui-tests
-        npm run test-ui-cli
+      shell: bash
+      run: cd ui-tests && npm install && npm run test-ui-cli
