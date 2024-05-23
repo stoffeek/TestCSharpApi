@@ -75,5 +75,64 @@ namespace WebApp;
         Console.WriteLine("The test passedds!");
     }
 
+ 
+       [Fact]
+    public void TestCountDomainsFromUserEmails()
+    {
+        // Mock data setup: skapa en lista med användare med olika e-postdomäner
+        var mockUsers = new List<dynamic>
+        {
+            new { email = "user1@example.com" },
+            new { email = "user2@example.com" },
+            new { email = "user3@test.com" },
+            new { email = "user4@test.com" },
+            new { email = "user5@test.com" }
+        };
 
-}   
+        // Mock SQLQuery metoden
+        Func<string, List<dynamic>> mockSqlQuery = (string sql) => {
+            Console.WriteLine($"Executing SQL: {sql}");
+            return mockUsers;
+        };
+
+        // Använd den mockade SQLQuery i stället för den verkliga
+        var result = Utils.CountDomainsFromUserEmails(mockSqlQuery);
+
+        // Förväntat resultat
+        var expected = new Dictionary<string, int>
+        {
+            { "example.com", 2 },
+            { "test.com", 3 }
+        };
+
+        // Jämför resultatet med det förväntade resultatet
+        Assert.Equal(expected, result);
+        Console.WriteLine("Test passed. The domain counts are as expected.");
+    }
+
+    [Fact]
+    public void TestRemoveMockUsers()
+    {
+        // Create mock users first to ensure there are users to remove
+        Utils.CreateMockUsers();
+
+        // Read all mock users from the JSON file
+        var read = File.ReadAllText(FilePath("json", "mock-users.json"));
+        Arr mockUsers = JSON.Parse(read);
+
+        // Remove mock users
+        var result = Utils.RemoveMockUsers();
+
+        // Assert that the RemoveMockUsers method only returns users that were in the mock file
+        Console.WriteLine($"The test expected that {mockUsers.Length} users should be removed.");
+        Console.WriteLine($"And {result.Length} users were removed.");
+        Console.WriteLine("The test also asserts that the users removed " +
+            "are equivalent (the same) to the expected users!");
+
+        Assert.Equivalent(mockUsers, result);
+        Console.WriteLine("The test passed!");
+    }
+}
+
+
+ 

@@ -79,5 +79,76 @@ public static class Utils
         return successFullyWrittenUsers;
     }
 
+       public static Dictionary<string, int> CountDomainsFromUserEmails(Func<string, List<dynamic>> sqlQuery)
+    {
+        // Hämta alla användare från databasen
+        var usersInDb = sqlQuery("SELECT email FROM users");
+        Console.WriteLine("Fetched users from database:");
+        foreach (var user in usersInDb)
+        {
+            Console.WriteLine(user.email);
+        }
+
+        // Skapa en dictionary för att lagra domänräkningen
+        var domainCount = new Dictionary<string, int>();
+
+        foreach (var user in usersInDb)
+        {
+            string email = user.email;
+            Console.WriteLine($"Processing email: {email}");
+
+            // Extrahera domänen från e-postadressen
+            var domain = email.Split('@')[1];
+            Console.WriteLine($"Extracted domain: {domain}");
+
+            // Om domänen redan finns i dictionaryn, öka räknaren, annars sätt räknaren till 1
+            if (domainCount.ContainsKey(domain))
+            {
+                domainCount[domain]++;
+            }
+            else
+            {
+                domainCount[domain] = 1;
+            }
+
+            Console.WriteLine($"Updated domain count: {domain} = {domainCount[domain]}");
+        }
+
+        Console.WriteLine("Final domain counts:");
+        foreach (var kvp in domainCount)
+        {
+            Console.WriteLine($"{kvp.Key}: {kvp.Value}");
+        }
+
+        return domainCount;
+    }
+    public static Arr RemoveMockUsers()
+    {
+        // Read all mock users from the JSON file
+        var read = File.ReadAllText(FilePath("json", "mock-users.json"));
+        Arr mockUsers = JSON.Parse(read);
+        Arr successfullyRemovedUsers = Arr();
+
+        foreach (var user in mockUsers)
+        {
+            var result = SQLQueryOne(
+                @"DELETE FROM users WHERE email = $email RETURNING *",
+                new { email = user.email }
+            );
+
+            // If the user was successfully removed, add to the list
+            if (!result.HasKey("error"))
+            {
+                successfullyRemovedUsers.Push(user);
+            }
+        }
+
+        return successfullyRemovedUsers;
+    }
+
+
 
 }
+
+
+
