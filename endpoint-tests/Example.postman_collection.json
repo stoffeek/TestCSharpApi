@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "6dbd5b4e-72e2-43cf-9e1f-d526ebbf5d15",
+		"_postman_id": "141a5688-4a24-45f6-bb2a-a970f4425b95",
 		"name": "Example",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "34831536"
@@ -3963,7 +3963,7 @@
 							"// If there are more products - then \"loop\"",
 							"// through them using setNextRequest",
 							"if (testData.products[testData.counter]) {",
-							"    pm.execution.setNextRequest(\"Delete products as Admin\");",
+							"    pm.execution.setNextRequest(\"Delete products\");",
 							"} else {",
 							"    console.log(\"All products have been deleted correctly.\");",
 							"    // IMPORTANT: Set counter to 0 in preparation of next request",
