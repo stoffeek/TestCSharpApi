@@ -2,11 +2,11 @@
 Globals = Obj(new
 {
     debugOn = true,
-    detailedAclDebug = false,
+    detailedAclDebug = true,
     aclOn = true,
     isSpa = true,
     port = 3001,
-    serverName = "Stoffes Stuuffz   ",
+    serverName = "Mine Minimal API Server",
     frontendPath = FilePath("..", "Frontend"),
     sessionLifeTimeHours = 2
 });
