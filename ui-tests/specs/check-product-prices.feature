@@ -83,7 +83,7 @@ Scenario: Verify that specific products are displayed and incorrect products are
 
 Scenario: Verify that specific products are displayed and incorrect products are not displayed when "Sports" category is selected
     Given that I am on the product page
-    When I choose the category "Sports"
+    When I choose the category "Sports Equipment"
     Then I should see the product "Football"
     And I should see the product "Tennis Racket"
     And I should see the product "Yoga Mat"
