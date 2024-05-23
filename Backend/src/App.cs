@@ -2,8 +2,8 @@
 Globals = Obj(new
 {
     debugOn = true,
-    detailedAclDebug = false,
-    aclOn = false,
+    detailedAclDebug = true,
+    aclOn = true,
     isSpa = true,
     port = 3001,
     serverName = "Mine Minimal API Server",

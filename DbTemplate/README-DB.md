@@ -12,4 +12,4 @@ To commit them to git:
 * Turn off the backend/server!
 * Make a copy of Backend/_db.sqlite3 to DbTemplate/_db.sqlite3.
 * Commit to git!
-*Bla
+*Blabla
