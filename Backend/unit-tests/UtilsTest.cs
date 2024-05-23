@@ -75,8 +75,7 @@ namespace WebApp;
         Console.WriteLine("The test passedds!");
     }
 
- 
-       [Fact]
+    [Fact]
     public void TestCountDomainsFromUserEmails()
     {
         // Mock data setup: skapa en lista med användare med olika e-postdomäner
@@ -106,10 +105,27 @@ namespace WebApp;
         };
 
         // Jämför resultatet med det förväntade resultatet
-        Assert.Equal(expected, result);
+        var resultDict = (IDictionary<string, object>)result;
+        foreach (var kvp in expected)
+        {
+            Assert.Equal(kvp.Value, resultDict[kvp.Key]);
+        }
+
+        // Logga resultatet
+        Console.WriteLine("Resulting domain counts:");
+        foreach (var kvp in resultDict)
+        {
+            Console.WriteLine($"{kvp.Key}: {kvp.Value}");
+        }
+
+        // Specifik loggning av hur många som har samma domän
+        foreach (var domain in resultDict.Keys)
+        {
+            Console.WriteLine($"Domain {domain} has {resultDict[domain]} users.");
+        }
+
         Console.WriteLine("Test passed. The domain counts are as expected.");
     }
-
     [Fact]
     public void TestRemoveMockUsers()
     {

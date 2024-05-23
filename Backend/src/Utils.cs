@@ -1,5 +1,6 @@
 using System.Security.Cryptography.X509Certificates;
 using Newtonsoft.Json;
+using System.Dynamic;
 
 namespace WebApp;
 public static class Utils
@@ -79,7 +80,7 @@ public static class Utils
         return successFullyWrittenUsers;
     }
 
-       public static Dictionary<string, int> CountDomainsFromUserEmails(Func<string, List<dynamic>> sqlQuery)
+     public static dynamic CountDomainsFromUserEmails(Func<string, List<dynamic>> sqlQuery)
     {
         // Hämta alla användare från databasen
         var usersInDb = sqlQuery("SELECT email FROM users");
@@ -120,9 +121,16 @@ public static class Utils
             Console.WriteLine($"{kvp.Key}: {kvp.Value}");
         }
 
-        return domainCount;
-    }
-    public static Arr RemoveMockUsers()
+        // Konvertera dictionary till dynamiskt objekt (ExpandoObject)
+        dynamic result = new ExpandoObject();
+        var resultDict = (IDictionary<string, object>)result;
+        foreach (var kvp in domainCount)
+        {
+            resultDict[kvp.Key] = kvp.Value;
+        }
+
+        return result;
+    }    public static Arr RemoveMockUsers()
     {
         // Read all mock users from the JSON file
         var read = File.ReadAllText(FilePath("json", "mock-users.json"));
